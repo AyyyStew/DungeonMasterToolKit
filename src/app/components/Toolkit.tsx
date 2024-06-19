@@ -1,3 +1,9 @@
+import InitiativeTracker from "./InitiativeTracker";
+
 export default function Toolkit() {
-  return <div>Toolkit</div>;
+  return (
+    <div>
+      <InitiativeTracker></InitiativeTracker>
+    </div>
+  );
 }
