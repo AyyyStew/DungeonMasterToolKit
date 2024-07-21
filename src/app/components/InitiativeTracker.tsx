@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useCharacterManager, Character } from "./useCharacterManager";
 
 type CharacterField = {
@@ -78,6 +78,9 @@ const CharacterItem: React.FC<{
 );
 
 export default function InitiativeTracker() {
+  const [round, setRound] = useState(1); // Add round state
+  const [currentIndex, setCurrentIndex] = useState(0); // Track the current index
+
   const {
     characters,
     name,
@@ -113,12 +116,77 @@ export default function InitiativeTracker() {
     (character) => character.id === currentCharacterId,
   );
 
+  const totalCharacters = characters.length;
+
+  const handleNextTurnWithRoundUpdate = () => {
+    if (totalCharacters === 0) return; // No characters to cycle through
+
+    // Update the index
+    const nextIndex = (currentIndex + 1) % totalCharacters;
+    setCurrentIndex(nextIndex);
+
+    // Check if we've completed a full cycle
+    if (nextIndex === 0) {
+      setRound((prevRound) => prevRound + 1);
+    }
+
+    // Call the existing handleNextTurn function
+    handleNextTurn();
+  };
+
+  const handlePreviousTurnWithRoundUpdate = () => {
+    if (totalCharacters === 0) return; // No characters to cycle through
+
+    // Update the index
+    const prevIndex = (currentIndex - 1 + totalCharacters) % totalCharacters;
+    setCurrentIndex(prevIndex);
+
+    // Check if we've completed a full cycle in reverse
+    if (currentIndex === 0) {
+      setRound((prevRound) => prevRound - 1);
+    }
+
+    // Call the existing handlePreviousTurn function
+    handlePreviousTurn();
+  };
+
+  const nextCharacter = characters[(currentIndex + 1) % totalCharacters];
+
   return (
     <div className="flex flex-col justify-center p-6">
       <section className="w-full max-w-5xl rounded-lg bg-gray-800 p-6 shadow-lg">
         <h2 className="mb-4 text-2xl font-semibold text-white">
           Character Initiative Tracker
         </h2>
+        <section className="mb-4 font-semibold text-white">
+          <div>
+            <div>Round: {round}</div>
+            <div>
+              Current Turn: {currentCharacter ? currentCharacter.name : "N/A"}
+            </div>
+            <div>Next Turn: {nextCharacter ? nextCharacter.name : "N/A"}</div>
+          </div>
+          <div className="mt-4 flex justify-end gap-4">
+            <button
+              className="button sort-button"
+              onClick={handleSortCharacters}
+            >
+              Sort by Initiative
+            </button>
+            <button
+              className="button navigation-button"
+              onClick={handlePreviousTurnWithRoundUpdate} // Use the updated handler
+            >
+              Previous Turn
+            </button>
+            <button
+              className="button navigation-button"
+              onClick={handleNextTurnWithRoundUpdate} // Use the updated handler
+            >
+              Next Turn
+            </button>
+          </div>
+        </section>
         <div className="grid-header text-white">
           <div className="font-semibold">Order</div>
           <div className="font-semibold">Initiative</div>
@@ -151,20 +219,6 @@ export default function InitiativeTracker() {
           onFieldChange={handleFieldChange}
           onSubmit={handleAddCharacter}
         />
-        <div className="mt-4 flex justify-end gap-4">
-          <button className="button sort-button" onClick={handleSortCharacters}>
-            Sort by Initiative
-          </button>
-          <button
-            className="button navigation-button"
-            onClick={handlePreviousTurn}
-          >
-            Previous Turn
-          </button>
-          <button className="button navigation-button" onClick={handleNextTurn}>
-            Next Turn
-          </button>
-        </div>
       </section>
     </div>
   );
