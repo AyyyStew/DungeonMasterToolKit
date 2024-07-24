@@ -2,11 +2,14 @@
 
 import React, { useState } from "react";
 import { useCharacterManager, Character } from "./useCharacterManager";
+import CharacterSummary from "./CharacterSummary";
 
 type CharacterField = {
   name: string;
   notes: string;
   initiative: number;
+  hp: number;
+  armor: number;
 };
 
 const CharacterItem: React.FC<{
@@ -29,42 +32,79 @@ const CharacterItem: React.FC<{
   onSubmit,
 }) => (
   <div className={`grid-item ${isCurrent ? "selected" : "bg-gray-800"}`}>
-    <div className="font-semibold md:hidden">#</div>
-    <input
-      type="text"
-      placeholder="Order"
-      value={order}
-      readOnly={true}
-      className="input-field"
-      style={{ maxWidth: "120px" }}
-    />
+    <div className="flex">
+      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+        <span className="justify-start pb-1 text-xs font-semibold">#</span>
+        <input
+          type="text"
+          placeholder="Order"
+          value={order}
+          readOnly={true}
+          className="input-field"
+          style={{ maxWidth: "120px" }}
+        />
+      </div>
 
-    <div className="font-semibold md:hidden">Initiative</div>
-    <input
-      type="number"
-      placeholder="Initiative"
-      value={fields.initiative}
-      onChange={(e) => onFieldChange("initiative", Number(e.target.value))}
-      className="input-field"
-      maxLength={2}
-      style={{ maxWidth: "120px" }}
-    />
-    <div className="font-semibold md:hidden">Name</div>
-    <input
-      type="text"
-      placeholder="Character Name"
-      value={fields.name}
-      onChange={(e) => onFieldChange("name", e.target.value)}
-      className="input-field"
-    />
-    <div className="font-semibold md:hidden">Notes</div>
-    <textarea
-      placeholder="Notes"
-      value={fields.notes}
-      onChange={(e) => onFieldChange("notes", e.target.value)}
-      className="input-field"
-    />
+      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+        <span className="justify-start pb-1 text-xs font-semibold">Init</span>
+        <input
+          type="text"
+          placeholder="Initiative"
+          value={fields.initiative}
+          onChange={(e) => onFieldChange("initiative", Number(e.target.value))}
+          className="input-field"
+          maxLength={2}
+          style={{ maxWidth: "120px" }}
+        />
+      </div>
 
+      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+        <span className="justify-start pb-1 text-xs font-semibold">HP</span>
+        <input
+          type="text"
+          placeholder="HP"
+          value={fields.hp}
+          onChange={(e) => onFieldChange("hp", Number(e.target.value))}
+          className="input-field"
+          maxLength={3}
+          style={{ maxWidth: "120px" }}
+        />
+      </div>
+
+      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+        <span className="justify-start pb-1 text-xs font-semibold">Armor</span>
+        <input
+          type="text"
+          placeholder="Armor"
+          value={fields.armor}
+          onChange={(e) => onFieldChange("armor", Number(e.target.value))}
+          className="input-field"
+          maxLength={2}
+          style={{ maxWidth: "120px" }}
+        />
+      </div>
+    </div>
+    <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+      <span className="justify-start pb-1 text-xs font-semibold">Name</span>
+      <input
+        type="text"
+        placeholder="Character Name"
+        value={fields.name}
+        onChange={(e) => onFieldChange("name", e.target.value)}
+        className="input-field !text-left"
+      />
+    </div>
+
+    <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+      <span className="justify-start pb-1 text-xs font-semibold">Notes</span>
+      <textarea
+        placeholder="Notes"
+        value={fields.notes}
+        rows={1}
+        onChange={(e) => onFieldChange("notes", e.target.value)}
+        className="input-field !text-left"
+      />
+    </div>
     {character ? (
       <button className="button delete-button" onClick={onDelete}>
         Delete
@@ -86,11 +126,15 @@ export default function InitiativeTracker() {
     name,
     notes,
     initiative,
+    hp,
+    armor,
     editId,
     currentCharacterId,
     setName,
     setNotes,
     setInitiative,
+    setHp,
+    setArmor,
     handleAddCharacter,
     handleDeleteCharacter,
     handleSortCharacters,
@@ -109,6 +153,8 @@ export default function InitiativeTracker() {
       if (field === "name") setName(value as string);
       if (field === "notes") setNotes(value as string);
       if (field === "initiative") setInitiative(value as number);
+      if (field === "hp") setHp(value as number);
+      if (field === "armor") setArmor(value as number);
     }
   };
 
@@ -153,46 +199,51 @@ export default function InitiativeTracker() {
   const nextCharacter = characters[(currentIndex + 1) % totalCharacters];
 
   return (
-    <div className="flex flex-col justify-center p-6">
-      <section className="w-full max-w-5xl rounded-lg bg-gray-800 p-6 shadow-lg">
+    <section className="flex justify-center p-6">
+      <div className="card w-full max-w-5xl bg-gray-800 p-6">
         <h2 className="mb-4 text-2xl font-semibold text-white">
-          Character Initiative Tracker
+          Initiative Tracker
         </h2>
         <section className="mb-4 font-semibold text-white">
           <div>
-            <div>Round: {round}</div>
-            <div>
-              Current Turn: {currentCharacter ? currentCharacter.name : "N/A"}
+            <div className="flex flex-wrap items-center justify-between">
+              <div>Round: {round}</div>
+              <div className="flex justify-end gap-4">
+                <button
+                  className="button sort-button"
+                  onClick={handleSortCharacters}
+                >
+                  Sort by Initiative
+                </button>
+                <button
+                  className="button navigation-button"
+                  onClick={handlePreviousTurnWithRoundUpdate} // Use the updated handler
+                >
+                  Previous Turn
+                </button>
+                <button
+                  className="button navigation-button"
+                  onClick={handleNextTurnWithRoundUpdate} // Use the updated handler
+                >
+                  Next Turn
+                </button>
+              </div>
             </div>
-            <div>Next Turn: {nextCharacter ? nextCharacter.name : "N/A"}</div>
-          </div>
-          <div className="mt-4 flex justify-end gap-4">
-            <button
-              className="button sort-button"
-              onClick={handleSortCharacters}
-            >
-              Sort by Initiative
-            </button>
-            <button
-              className="button navigation-button"
-              onClick={handlePreviousTurnWithRoundUpdate} // Use the updated handler
-            >
-              Previous Turn
-            </button>
-            <button
-              className="button navigation-button"
-              onClick={handleNextTurnWithRoundUpdate} // Use the updated handler
-            >
-              Next Turn
-            </button>
+            <section>
+              <h3>Turn Order</h3>
+              <div className="flex flex-wrap gap-1">
+                <div>
+                  <CharacterSummary character={currentCharacter} />
+                </div>
+                <div>
+                  <CharacterSummary character={nextCharacter} />
+                </div>
+              </div>
+            </section>
           </div>
         </section>
-        <div className="grid-header text-white">
-          <div className="font-semibold">Order</div>
-          <div className="font-semibold">Initiative</div>
-          <div className="font-semibold">Name</div>
-          <div className="font-semibold">Notes</div>
-          <div className="font-semibold">Action</div>
+        <div className="text-white">
+          <h4>Add Characters</h4>
         </div>
         {characters.map((character, index) => (
           <CharacterItem
@@ -203,6 +254,8 @@ export default function InitiativeTracker() {
               name: character.name,
               notes: character.notes,
               initiative: character.initiative,
+              hp: character.hp,
+              armor: character.armor,
             }}
             order={index + 1}
             onFieldChange={(field, value) =>
@@ -214,12 +267,12 @@ export default function InitiativeTracker() {
         ))}
         <CharacterItem
           editId={editId}
-          fields={{ name, notes, initiative }}
+          fields={{ name, notes, initiative, hp, armor }}
           order={characters.length + 1}
           onFieldChange={handleFieldChange}
           onSubmit={handleAddCharacter}
         />
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

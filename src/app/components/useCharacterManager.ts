@@ -5,6 +5,8 @@ export interface Character {
   initiative: number;
   name: string;
   notes: string;
+  hp: number; // Hit points
+  armor: number; // Armor value
 }
 
 export function useCharacterManager() {
@@ -12,6 +14,8 @@ export function useCharacterManager() {
   const [name, setName] = useState("");
   const [notes, setNotes] = useState("");
   const [initiative, setInitiative] = useState<number>(0);
+  const [hp, setHp] = useState<number>(0);
+  const [armor, setArmor] = useState<number>(0);
   const [isSorted, setIsSorted] = useState<boolean>(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [currentCharacterId, setCurrentCharacterId] = useState<string | null>(null);
@@ -30,13 +34,13 @@ export function useCharacterManager() {
       const updatedCharacters = [...characters];
       const index = updatedCharacters.findIndex(character => character.id === editId);
       if (index !== -1) {
-        updatedCharacters[index] = { id: editId, initiative, name, notes };
+        updatedCharacters[index] = { id: editId, initiative, name, notes, hp, armor };
         setCharacters(updatedCharacters);
         setEditId(null);
       }
     } else {
       // Add new character
-      const newCharacter = { id: new Date().toISOString(), initiative, name, notes };
+      const newCharacter = { id: new Date().toISOString(), initiative, name, notes, hp, armor };
       setCharacters([...characters, newCharacter]);
       if (characters.length === 0){
         setCurrentCharacterId(newCharacter.id); // Select new character
@@ -45,6 +49,8 @@ export function useCharacterManager() {
     setName("");
     setInitiative(0);
     setNotes("");
+    setHp(0);
+    setArmor(0);
   };
 
   const handleEditCharacter = (id: string) => {
@@ -53,6 +59,8 @@ export function useCharacterManager() {
       setName(character.name);
       setNotes(character.notes);
       setInitiative(character.initiative);
+      setHp(character.hp);
+      setArmor(character.armor);
       setEditId(id);
     }
   };
@@ -87,7 +95,7 @@ export function useCharacterManager() {
   ) => {
     const updatedCharacters = characters.map(character =>
       character.id === id
-        ? { ...character, [field]: field === "initiative" ? Number(value) : value }
+        ? { ...character, [field]: field === "initiative" || field === "hp" || field === "armor" ? Number(value) : value }
         : character
     );
     setCharacters(updatedCharacters);
@@ -112,12 +120,16 @@ export function useCharacterManager() {
     name,
     notes,
     initiative,
+    hp,
+    armor,
     isSorted,
     editId,
     currentCharacterId,
     setName,
     setNotes,
     setInitiative,
+    setHp,
+    setArmor,
     handleAddCharacter,
     handleEditCharacter,
     handleSortCharacters,
