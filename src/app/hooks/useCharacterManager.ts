@@ -9,6 +9,14 @@ export interface Character {
   armor: number; // Armor value
 }
 
+export type CharacterField = {
+  name: string;
+  notes: string;
+  initiative: number;
+  hp: number;
+  armor: number;
+};
+
 export function useCharacterManager() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [name, setName] = useState("");
@@ -26,7 +34,7 @@ export function useCharacterManager() {
     } else if (currentCharacterId && !characters.some(character => character.id === currentCharacterId)) {
       setCurrentCharacterId(characters[0].id);
     }
-  }, [characters]);
+  }, [characters, currentCharacterId]);
 
   const handleAddCharacter = () => {
     if (editId !== null) {
@@ -78,7 +86,6 @@ export function useCharacterManager() {
 
     const currentIndex = characters.findIndex(character => character.id === id)
     setCharacters(updatedCharacters);
-    console.log({currentIndex, 'c':characters.length})
     const nextInLine = (currentIndex+1) >= characters.length ? null : characters[currentIndex+1].id
     if (currentCharacterId === id) {
       setCurrentCharacterId(updatedCharacters.length > 0 ? nextInLine : null);

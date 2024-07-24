@@ -1,126 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { useCharacterManager, Character } from "./useCharacterManager";
+import React, { useState, useEffect } from "react";
+import {
+  useCharacterManager,
+  CharacterField,
+} from "../hooks/useCharacterManager";
 import CharacterSummary from "./CharacterSummary";
-
-type CharacterField = {
-  name: string;
-  notes: string;
-  initiative: number;
-  hp: number;
-  armor: number;
-};
-
-const CharacterItem: React.FC<{
-  character?: Character;
-  isCurrent?: boolean;
-  editId?: string | null;
-  fields: CharacterField;
-  order: number;
-  onFieldChange: (field: keyof CharacterField, value: string | number) => void;
-  onDelete?: () => void;
-  onSubmit: () => void;
-}> = ({
-  character,
-  isCurrent,
-  editId,
-  fields,
-  order,
-  onFieldChange,
-  onDelete,
-  onSubmit,
-}) => (
-  <div className={`grid-item ${isCurrent ? "selected" : "bg-gray-800"}`}>
-    <div className="flex">
-      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
-        <span className="justify-start pb-1 text-xs font-semibold">#</span>
-        <input
-          type="text"
-          placeholder="Order"
-          value={order}
-          readOnly={true}
-          className="input-field"
-          style={{ maxWidth: "120px" }}
-        />
-      </div>
-
-      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
-        <span className="justify-start pb-1 text-xs font-semibold">Init</span>
-        <input
-          type="text"
-          placeholder="Initiative"
-          value={fields.initiative}
-          onChange={(e) => onFieldChange("initiative", Number(e.target.value))}
-          className="input-field"
-          maxLength={2}
-          style={{ maxWidth: "120px" }}
-        />
-      </div>
-
-      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
-        <span className="justify-start pb-1 text-xs font-semibold">HP</span>
-        <input
-          type="text"
-          placeholder="HP"
-          value={fields.hp}
-          onChange={(e) => onFieldChange("hp", Number(e.target.value))}
-          className="input-field"
-          maxLength={3}
-          style={{ maxWidth: "120px" }}
-        />
-      </div>
-
-      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
-        <span className="justify-start pb-1 text-xs font-semibold">Armor</span>
-        <input
-          type="text"
-          placeholder="Armor"
-          value={fields.armor}
-          onChange={(e) => onFieldChange("armor", Number(e.target.value))}
-          className="input-field"
-          maxLength={2}
-          style={{ maxWidth: "120px" }}
-        />
-      </div>
-    </div>
-    <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
-      <span className="justify-start pb-1 text-xs font-semibold">Name</span>
-      <input
-        type="text"
-        placeholder="Character Name"
-        value={fields.name}
-        onChange={(e) => onFieldChange("name", e.target.value)}
-        className="input-field !text-left"
-      />
-    </div>
-
-    <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
-      <span className="justify-start pb-1 text-xs font-semibold">Notes</span>
-      <textarea
-        placeholder="Notes"
-        value={fields.notes}
-        rows={1}
-        onChange={(e) => onFieldChange("notes", e.target.value)}
-        className="input-field !text-left"
-      />
-    </div>
-    {character ? (
-      <button className="button delete-button" onClick={onDelete}>
-        Delete
-      </button>
-    ) : (
-      <button className="button add-button" onClick={onSubmit}>
-        Add Character
-      </button>
-    )}
-  </div>
-);
+import CharacterItem from "./CharacterItem";
+import { calculateTurnOrder } from "../utils/turnUtils";
 
 export default function InitiativeTracker() {
-  const [round, setRound] = useState(1); // Add round state
-  const [currentIndex, setCurrentIndex] = useState(0); // Track the current index
-
   const {
     characters,
     name,
@@ -139,9 +28,40 @@ export default function InitiativeTracker() {
     handleDeleteCharacter,
     handleSortCharacters,
     handleChangeCharacter,
-    handleNextTurn,
-    handlePreviousTurn,
   } = useCharacterManager();
+
+  const [round, setRound] = useState(1);
+  const [turnPointer, setTurnPointer] = useState(0);
+
+  const { currentCharacter, nextCharacter, nextNextCharacter } =
+    calculateTurnOrder(characters, turnPointer);
+
+  useEffect(() => {
+    if (characters.length > 0 && !currentCharacterId) {
+      setTurnPointer(0);
+    }
+  }, [characters, currentCharacterId]);
+
+  function nextTurnHandler() {
+    if (characters.length > 0) {
+      const newPointer = (turnPointer + 1) % characters.length;
+      if (newPointer === 0) {
+        setRound(round + 1);
+      }
+      setTurnPointer(turnPointer + 1);
+    }
+  }
+
+  function previousTurnHandler() {
+    if (turnPointer > 0) {
+      const newPointer =
+        (turnPointer - 1 + characters.length) % characters.length;
+      if (newPointer === characters.length - 1) {
+        setRound(round - 1);
+      }
+      setTurnPointer(turnPointer - 1);
+    }
+  }
 
   const handleFieldChange = (
     field: keyof CharacterField,
@@ -157,46 +77,6 @@ export default function InitiativeTracker() {
       if (field === "armor") setArmor(value as number);
     }
   };
-
-  const currentCharacter = characters.find(
-    (character) => character.id === currentCharacterId,
-  );
-
-  const totalCharacters = characters.length;
-
-  const handleNextTurnWithRoundUpdate = () => {
-    if (totalCharacters === 0) return; // No characters to cycle through
-
-    // Update the index
-    const nextIndex = (currentIndex + 1) % totalCharacters;
-    setCurrentIndex(nextIndex);
-
-    // Check if we've completed a full cycle
-    if (nextIndex === 0) {
-      setRound((prevRound) => prevRound + 1);
-    }
-
-    // Call the existing handleNextTurn function
-    handleNextTurn();
-  };
-
-  const handlePreviousTurnWithRoundUpdate = () => {
-    if (totalCharacters === 0) return; // No characters to cycle through
-
-    // Update the index
-    const prevIndex = (currentIndex - 1 + totalCharacters) % totalCharacters;
-    setCurrentIndex(prevIndex);
-
-    // Check if we've completed a full cycle in reverse
-    if (currentIndex === 0) {
-      setRound((prevRound) => prevRound - 1);
-    }
-
-    // Call the existing handlePreviousTurn function
-    handlePreviousTurn();
-  };
-
-  const nextCharacter = characters[(currentIndex + 1) % totalCharacters];
 
   return (
     <section className="flex justify-center p-6">
@@ -217,13 +97,13 @@ export default function InitiativeTracker() {
                 </button>
                 <button
                   className="button navigation-button"
-                  onClick={handlePreviousTurnWithRoundUpdate} // Use the updated handler
+                  onClick={previousTurnHandler}
                 >
                   Previous Turn
                 </button>
                 <button
                   className="button navigation-button"
-                  onClick={handleNextTurnWithRoundUpdate} // Use the updated handler
+                  onClick={nextTurnHandler}
                 >
                   Next Turn
                 </button>
@@ -233,10 +113,19 @@ export default function InitiativeTracker() {
               <h3>Turn Order</h3>
               <div className="flex flex-wrap gap-1">
                 <div>
-                  <CharacterSummary character={currentCharacter} />
+                  <CharacterSummary
+                    character={currentCharacter}
+                    position="Current"
+                  />
                 </div>
                 <div>
-                  <CharacterSummary character={nextCharacter} />
+                  <CharacterSummary character={nextCharacter} position="Next" />
+                </div>
+                <div>
+                  <CharacterSummary
+                    character={nextNextCharacter}
+                    position="On Deck"
+                  />
                 </div>
               </div>
             </section>
@@ -249,7 +138,7 @@ export default function InitiativeTracker() {
           <CharacterItem
             key={character.id}
             character={character}
-            isCurrent={character.id === currentCharacterId}
+            isCurrent={character.id === currentCharacter?.id}
             fields={{
               name: character.name,
               notes: character.notes,

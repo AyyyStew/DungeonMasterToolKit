@@ -38,7 +38,7 @@
 }
 
 .grid-item {
-  @apply mb-2 grid grid-cols-1 gap-1 rounded-lg border border-gray-600 bg-gray-700 p-2 text-white md:grid-cols-[4fr_3fr_5fr_100px];
+  @apply mb-2 grid grid-cols-1 gap-1 rounded-lg border border-gray-600 bg-gray-700 p-2 text-white md:grid-cols-[3fr_4fr_5fr_100px];
 }
 
 .selected {
