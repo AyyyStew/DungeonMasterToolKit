@@ -7,6 +7,14 @@
     @apply bg-slate-700;
   }
 
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"] {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+  }
+
   table {
     @apply border-spacing-2;
   }
@@ -42,7 +50,7 @@
 }
 
 .selected {
-  @apply border-2 border-yellow-500 bg-gray-700;
+  @apply border-2 border-emerald-500 bg-gray-700;
 }
 
 .card {

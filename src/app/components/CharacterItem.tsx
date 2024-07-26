@@ -24,7 +24,7 @@ const CharacterItem: React.FC<{
 }) => (
   <div className={`grid-item ${isCurrent ? "selected" : "bg-gray-800"}`}>
     <div className="flex">
-      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-gray-600 p-2">
         <span className="justify-start pb-1 text-xs font-semibold">#</span>
         <input
           type="text"
@@ -32,11 +32,10 @@ const CharacterItem: React.FC<{
           value={order}
           readOnly={true}
           className="input-field text-center"
-          style={{ maxWidth: "120px" }}
         />
       </div>
 
-      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-gray-600 p-2">
         <span className="justify-start pb-1 text-xs font-semibold">Init</span>
         <input
           type="number"
@@ -45,11 +44,10 @@ const CharacterItem: React.FC<{
           onChange={(e) => onFieldChange("initiative", Number(e.target.value))}
           className="input-field text-center"
           maxLength={2}
-          style={{ maxWidth: "120px" }}
         />
       </div>
 
-      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-gray-600 p-2">
         <span className="justify-start pb-1 text-xs font-semibold">HP</span>
         <input
           type="number"
@@ -58,20 +56,18 @@ const CharacterItem: React.FC<{
           onChange={(e) => onFieldChange("hp", Number(e.target.value))}
           className="input-field text-center"
           maxLength={3}
-          style={{ maxWidth: "120px" }}
         />
       </div>
 
-      <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-gray-600 p-2">
         <span className="justify-start pb-1 text-xs font-semibold">Armor</span>
         <input
           type="number"
           placeholder="Armor"
           value={fields.armor}
           onChange={(e) => onFieldChange("armor", Number(e.target.value))}
-          className="input-field text-center"
+          className="input-field w-full text-center"
           maxLength={2}
-          style={{ maxWidth: "120px" }}
         />
       </div>
     </div>
