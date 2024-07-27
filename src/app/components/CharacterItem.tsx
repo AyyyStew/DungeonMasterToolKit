@@ -22,9 +22,9 @@ const CharacterItem: React.FC<{
   onDelete,
   onSubmit,
 }) => (
-  <div className={`grid-item ${isCurrent ? "selected" : "bg-gray-800"}`}>
+  <div className={`grid-item ${isCurrent ? "selected" : "bg-neutral-900"}`}>
     <div className="flex">
-      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-gray-600 p-2">
+      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-neutral-700 p-2">
         <span className="justify-start pb-1 text-xs font-semibold">#</span>
         <input
           type="text"
@@ -35,7 +35,7 @@ const CharacterItem: React.FC<{
         />
       </div>
 
-      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-gray-600 p-2">
+      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-neutral-700 p-2">
         <span className="justify-start pb-1 text-xs font-semibold">Init</span>
         <input
           type="number"
@@ -47,7 +47,7 @@ const CharacterItem: React.FC<{
         />
       </div>
 
-      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-gray-600 p-2">
+      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-neutral-700 p-2">
         <span className="justify-start pb-1 text-xs font-semibold">HP</span>
         <input
           type="number"
@@ -59,7 +59,7 @@ const CharacterItem: React.FC<{
         />
       </div>
 
-      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-gray-600 p-2">
+      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-neutral-700 p-2">
         <span className="justify-start pb-1 text-xs font-semibold">Armor</span>
         <input
           type="number"
@@ -71,7 +71,7 @@ const CharacterItem: React.FC<{
         />
       </div>
     </div>
-    <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+    <div className="card mx-1 flex flex-col items-center bg-neutral-700 p-2">
       <span className="justify-start pb-1 text-xs font-semibold">Name</span>
       <input
         type="text"
@@ -82,7 +82,7 @@ const CharacterItem: React.FC<{
       />
     </div>
 
-    <div className="card mx-1 flex flex-col items-center bg-gray-600 p-2">
+    <div className="card mx-1 flex flex-col items-center bg-neutral-700 p-2">
       <span className="justify-start pb-1 text-xs font-semibold">Notes</span>
       <textarea
         placeholder="Notes"
@@ -93,11 +93,11 @@ const CharacterItem: React.FC<{
       />
     </div>
     {character ? (
-      <button className="button delete-button" onClick={onDelete}>
+      <button className="button blue-button" onClick={onDelete}>
         Delete
       </button>
     ) : (
-      <button className="button add-button" onClick={onSubmit}>
+      <button className="button red-button" onClick={onSubmit}>
         Add Character
       </button>
     )}

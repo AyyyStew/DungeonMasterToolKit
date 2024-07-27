@@ -79,8 +79,8 @@ export default function InitiativeTracker() {
   };
 
   return (
-    <div className="card w-full max-w-5xl bg-gray-800 p-6">
-      <h2 className="mb-4 text-2xl font-semibold text-white">
+    <div className="card bg-gradient w-full max-w-5xl p-6">
+      <h2 className="text-gradient mb-4 text-2xl font-semibold">
         Initiative Tracker
       </h2>
       <section className="mb-4 font-semibold text-white">
@@ -89,19 +89,19 @@ export default function InitiativeTracker() {
             <div>Round: {round}</div>
             <div className="flex justify-end gap-4">
               <button
-                className="button sort-button"
-                onClick={handleSortCharacters}
-              >
-                Sort by Initiative
-              </button>
-              <button
-                className="button navigation-button"
+                className="button red-button px-3 py-2"
                 onClick={previousTurnHandler}
               >
                 Previous Turn
               </button>
               <button
-                className="button navigation-button"
+                className="button grey-button px-3 py-2"
+                onClick={handleSortCharacters}
+              >
+                Sort by Initiative
+              </button>
+              <button
+                className="button blue-button px-3 py-2"
                 onClick={nextTurnHandler}
               >
                 Next Turn

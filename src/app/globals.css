@@ -4,9 +4,8 @@
 
 @layer base {
   input {
-    @apply bg-slate-700;
+    @apply bg-neutral-800;
   }
-
 
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button,
@@ -14,50 +13,62 @@
     -webkit-appearance: none;
     -moz-appearance: textfield;
   }
-
-  table {
-    @apply border-spacing-2;
-  }
 }
 
-/* styles.css */
+.bg-gradient {
+  @apply bg-gradient-radial from-neutral-900 to-neutral-800 shadow;
+}
+
+.card-gradient{
+  @apply bg-neutral-800;
+
+}
+
+.text-gradient {
+  @apply bg-gradient-to-r from-emerald-100 from-10% to-emerald-600 bg-clip-text text-transparent
+  /* @apply bg-gradient-to-br from-emerald-600 to-95% to-cyan-500 bg-clip-text text-transparent; */
+}
+
 .input-field {
-  @apply mx-2 w-full rounded-md bg-gray-700 p-2 mb-1 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400;
+  @apply mx-2 w-full rounded-md bg-neutral-800 p-2 mb-1 text-white focus:outline-none focus:ring-2 focus:ring-neutral-500;
 }
 
 .button {
-  @apply rounded-lg px-2 py-1 text-white focus:outline-none focus:ring-2;
+  @apply rounded-lg text-white drop-shadow-lg font-semibold focus:outline-none focus:ring-2 shadow-md;
 }
 
-.delete-button {
-  @apply bg-red-500 hover:bg-red-600 focus:ring-red-400;
+.button:hover {
+  @apply shadow-inner shadow-neutral-700;
 }
 
-.add-button {
-  @apply bg-blue-500 hover:bg-blue-600 focus:ring-blue-400;
+.shadow{
+  @apply shadow-md shadow-neutral-900;
 }
 
-.navigation-button {
-  @apply bg-blue-500 px-4 hover:bg-blue-600 focus:ring-blue-400;
+.red-button {
+  @apply bg-gradient-to-r from-red-600 to-orange-600;
 }
 
-.sort-button {
-  @apply bg-emerald-600 px-4 text-white hover:bg-emerald-700 focus:ring-emerald-400;
+.blue-button {
+  @apply bg-gradient-to-r from-emerald-600 to-95% to-cyan-500;
+}
+
+.grey-button {
+  @apply bg-gradient-to-r from-neutral-600 to-95% to-neutral-500;
 }
 
 .grid-item {
-  @apply mb-2 grid grid-cols-1 gap-1 rounded-lg border border-gray-600 bg-gray-700 p-2 text-white md:grid-cols-[3fr_4fr_5fr_100px];
+  @apply mb-2 grid grid-cols-1 gap-1 rounded-lg border border-neutral-700 bg-neutral-800 p-2 text-white md:grid-cols-[3fr_4fr_5fr_100px];
 }
 
 .selected {
-  @apply border-2 border-emerald-500 bg-gray-700;
+  @apply border-2 border-neutral-400;
 }
 
 .card {
   @apply rounded-lg shadow-lg;
 }
 
-/* Add this to your CSS file or <style> block */
 @media (max-width: 768px) {
   .grid-header,
   .grid-item {
@@ -69,6 +80,7 @@
   .grid-header div {
     display: none;
   }
+
   .grid-item .input-field {
     @apply p-1;
   }

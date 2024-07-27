@@ -9,7 +9,7 @@ function makeLink(path: string, name: string, pathname: string) {
   return (
     <li className="mx-2">
       <Link
-        className={`link ${pathname === path ? "text-white" : "text-emerald-500"}`}
+        className={`link ${pathname === path ? "text-white" : "text-neutral-600"}`}
         href={path}
       >
         {name}
@@ -21,8 +21,8 @@ function makeLink(path: string, name: string, pathname: string) {
 export function Links() {
   const pathname = usePathname();
   const paths: Record<string, string> = {
-    "/": "Home",
-    "/about": "About",
+    // "/": "Home",
+    // "/about": "About",
   };
   return (
     <nav>
