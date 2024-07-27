@@ -129,6 +129,43 @@ const DiceRoller: React.FC = () => {
     setAllCollapsed(!allCollapsed);
   };
 
+  const handleCommonRoll = (diceExpression: string) => {
+    if (input === "") {
+      setInput(diceExpression);
+    } else {
+      setInput(`${input} + ${diceExpression}`);
+    }
+    setInputError("");
+  };
+
+  const diceExpressions = [
+    "1d4",
+    "1d6",
+    "1d8",
+    "1d10",
+    "1d12",
+    "1d20",
+    "1d100",
+  ];
+  // const buttonStyles = [
+  //   "bg-red-600",
+  //   "bg-yellow-600",
+  //   "bg-green-600",
+  //   "bg-blue-600",
+  //   "bg-indigo-600",
+  //   "bg-purple-600",
+  //   "bg-pink-600",
+  // ];
+  const buttonStyles = [
+    "bg-gradient-to-r from-pink-700 from-10% to-pink-500",
+    "bg-gradient-to-r from-red-700 from-10% to-red-500",
+    "bg-gradient-to-r from-yellow-700 from-10% to-yellow-500",
+    "bg-gradient-to-r from-green-700 from-10% to-green-500",
+    "bg-gradient-to-r from-blue-700 from-10% to-blue-500",
+    "bg-gradient-to-r from-indigo-700 from-10% to-indigo-500",
+    "bg-gradient-to-r from-purple-700 from-10% to-purple-500",
+  ];
+
   return (
     <section className="card bg-gradient max-w-5xl p-6">
       <h1 className="text-gradient mb-4 text-2xl font-bold">Dice Roller</h1>
@@ -148,7 +185,17 @@ const DiceRoller: React.FC = () => {
         </button>
       </div>
       {inputError && <p className="text-center text-red-500">{inputError}</p>}
-      <div className="mb-2 flex justify-end"></div>
+      <div className="mb-4 flex justify-center space-x-2">
+        {diceExpressions.map((dice, index) => (
+          <button
+            key={dice}
+            onClick={() => handleCommonRoll(dice)}
+            className={`button ${buttonStyles[index % buttonStyles.length]} rounded-lg px-4 py-2 text-white`}
+          >
+            {dice}
+          </button>
+        ))}
+      </div>
       <div className="max-w-full overflow-x-auto">
         <p className="text- mb-2 text-white">
           Click the button to toggle calculation details
