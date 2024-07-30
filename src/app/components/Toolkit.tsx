@@ -1,4 +1,4 @@
-import DiceRoller from "./DiceRoller";
+import DiceRoller from "./DiceRoller/DiceRoller";
 import InitiativeTracker from "./InitiativeTracker";
 
 export default function Toolkit() {

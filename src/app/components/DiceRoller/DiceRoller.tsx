@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import d4 from "./Dice/d4";
+import Image from "next/image";
 
 interface DiceRollResult {
   expression: string;
@@ -147,15 +149,15 @@ const DiceRoller: React.FC = () => {
     "1d20",
     "1d100",
   ];
-  // const buttonStyles = [
-  //   "bg-red-600",
-  //   "bg-yellow-600",
-  //   "bg-green-600",
-  //   "bg-blue-600",
-  //   "bg-indigo-600",
-  //   "bg-purple-600",
-  //   "bg-pink-600",
-  // ];
+  const diceSvgs = [
+    "/d4.svg",
+    "/d6.svg",
+    "/d8.svg",
+    "/d10.svg",
+    "/d12.svg",
+    "/d20.svg",
+    "/d100.svg",
+  ]
   const buttonStyles = [
     "bg-gradient-to-r from-pink-700 from-10% to-pink-500",
     "bg-gradient-to-r from-red-700 from-10% to-red-500",
@@ -187,13 +189,15 @@ const DiceRoller: React.FC = () => {
       {inputError && <p className="text-center text-red-500">{inputError}</p>}
       <div className="mb-4 flex justify-center space-x-2">
         {diceExpressions.map((dice, index) => (
-          <button
-            key={dice}
-            onClick={() => handleCommonRoll(dice)}
-            className={`button ${buttonStyles[index % buttonStyles.length]} rounded-lg px-4 py-2 text-white`}
-          >
-            {dice}
-          </button>
+          <div className={`flex button ${buttonStyles[index]} rounded-lg px-4 py-2 text-white`}>
+            <button
+              key={dice}
+              onClick={() => handleCommonRoll(dice)}
+            >
+              {dice}
+            </button>
+            <Image className="ml-2" src={diceSvgs[index]} alt="a four sided dice" width={20} height={20}></Image>
+          </div>
         ))}
       </div>
       <div className="max-w-full overflow-x-auto">
