@@ -31,7 +31,7 @@ const CharacterItem: React.FC<{
           placeholder="Order"
           value={order}
           readOnly={true}
-          className="input-field text-center"
+          className="input-field mx-2 w-full text-center"
         />
       </div>
 
@@ -42,7 +42,7 @@ const CharacterItem: React.FC<{
           placeholder="Initiative"
           value={fields.initiative}
           onChange={(e) => onFieldChange("initiative", Number(e.target.value))}
-          className="input-field text-center"
+          className="input-field mx-2 w-full text-center"
           maxLength={2}
         />
       </div>
@@ -54,7 +54,7 @@ const CharacterItem: React.FC<{
           placeholder="HP"
           value={fields.hp}
           onChange={(e) => onFieldChange("hp", Number(e.target.value))}
-          className="input-field text-center"
+          className="input-field mx-2 w-full text-center"
           maxLength={3}
         />
       </div>
@@ -66,7 +66,7 @@ const CharacterItem: React.FC<{
           placeholder="Armor"
           value={fields.armor}
           onChange={(e) => onFieldChange("armor", Number(e.target.value))}
-          className="input-field w-full text-center"
+          className="input-field mx-2 w-full text-center"
           maxLength={2}
         />
       </div>
@@ -78,7 +78,7 @@ const CharacterItem: React.FC<{
         placeholder="Character Name"
         value={fields.name}
         onChange={(e) => onFieldChange("name", e.target.value)}
-        className="input-field !text-left"
+        className="input-field mx-2 w-full !text-left"
       />
     </div>
 
@@ -89,7 +89,7 @@ const CharacterItem: React.FC<{
         value={fields.notes}
         rows={1}
         onChange={(e) => onFieldChange("notes", e.target.value)}
-        className="input-field !text-left"
+        className="input-field mx-2 w-full !text-left"
       />
     </div>
     {character ? (

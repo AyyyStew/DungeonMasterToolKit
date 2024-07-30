@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import d4 from "./Dice/d4";
 import Image from "next/image";
 
 interface DiceRollResult {
@@ -157,7 +156,7 @@ const DiceRoller: React.FC = () => {
     "/d12.svg",
     "/d20.svg",
     "/d100.svg",
-  ]
+  ];
   const buttonStyles = [
     "bg-gradient-to-r from-pink-700 from-10% to-pink-500",
     "bg-gradient-to-r from-red-700 from-10% to-red-500",
@@ -171,36 +170,42 @@ const DiceRoller: React.FC = () => {
   return (
     <section className="card bg-gradient max-w-5xl p-6">
       <h1 className="text-gradient mb-4 text-2xl font-bold">Dice Roller</h1>
-      <div className="mb-2 flex justify-center">
+      <div className="mb-4 grid grid-cols-[1fr] gap-2 sm:grid-cols-[9fr_1fr]">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter dice expression (e.g., 2d8 + 4d6 * 2)"
-          className="input-field rounded px-4 py-2 text-center shadow"
+          className="input-field w-full rounded text-center shadow"
         />
         <button
           onClick={handleRoll}
-          className="duration-400 button blue-button ml-3 rounded-lg px-8 py-3 font-semibold text-white"
+          className="duration-400 button blue-button justify-self-center rounded-lg px-6 py-3 font-semibold"
         >
           Roll
         </button>
       </div>
+
       {inputError && <p className="text-center text-red-500">{inputError}</p>}
-      <div className="mb-4 flex justify-center space-x-2">
+      <div className="mb-4 flex flex-wrap justify-center space-x-2">
         {diceExpressions.map((dice, index) => (
-          <div className={`flex button ${buttonStyles[index]} rounded-lg px-4 py-2 text-white`}>
-            <button
-              key={dice}
-              onClick={() => handleCommonRoll(dice)}
-            >
-              {dice}
-            </button>
-            <Image className="ml-2" src={diceSvgs[index]} alt="a four sided dice" width={20} height={20}></Image>
+          <div
+            className={`button mb-2 flex ${buttonStyles[index]} w-max rounded-lg px-4 py-2 text-white`}
+            key={dice}
+            onClick={() => handleCommonRoll(dice)}
+          >
+            <button>{dice}</button>
+            <Image
+              className="ml-2"
+              src={diceSvgs[index]}
+              alt="a four sided dice"
+              width={20}
+              height={20}
+            ></Image>
           </div>
         ))}
       </div>
-      <div className="max-w-full overflow-x-auto">
+      <div className="max-w-[100vw] overflow-x-auto">
         <p className="text- mb-2 text-white">
           Click the button to toggle calculation details
         </p>
