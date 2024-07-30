@@ -11,7 +11,7 @@ const CharacterSummary: React.FC<{
     character = {
       hp: 0,
       armor: 0,
-      name: "Name",
+      name: "No Character",
       id: "",
       initiative: 0,
       notes: "",
@@ -19,15 +19,15 @@ const CharacterSummary: React.FC<{
   }
 
   return (
-    <div className="">
+    <div>
       <span className="text-xs font-semibold">{position}</span>
-      <div className="flex items-center rounded-lg border-neutral-700 bg-neutral-800 text-white shadow-md">
-        <div className="mx-7 text-lg">{character.name}</div>
-        <div className="card flex flex-col-reverse items-center bg-neutral-700 p-2">
+      <div className="flex items-center rounded-lg bg-neutral-800 text-white">
+        <div className="mx-6 text-lg">{character.name}</div>
+        <div className="card my-2 flex flex-col-reverse items-center rounded-none border-2 border-neutral-700 p-2">
           <span className="text-xs font-semibold">HP</span>
           <span>{character.hp}</span>
         </div>
-        <div className="card m-2 flex flex-col-reverse items-center bg-neutral-700 p-2">
+        <div className="card m-2 flex flex-col-reverse items-center rounded-none border-2 border-neutral-700 p-2">
           <span className="text-xs font-semibold">Armor</span>
           <span>{character.armor}</span>
         </div>

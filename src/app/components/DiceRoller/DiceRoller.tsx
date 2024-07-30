@@ -168,15 +168,24 @@ const DiceRoller: React.FC = () => {
   ];
 
   return (
-    <section className="card bg-gradient max-w-5xl p-6">
-      <h1 className="text-gradient mb-4 text-2xl font-bold">Dice Roller</h1>
+    <section className="card bg-gradient w-full max-w-5xl p-6">
+      <div className="mb-4 flex align-baseline">
+        <Image
+          className="mr-3"
+          src="./d20.svg"
+          alt="a four sided dice"
+          width={25}
+          height={25}
+        ></Image>
+        <h2 className="text-gradient text-2xl font-semibold">Dice Roller</h2>
+      </div>
       <div className="mb-4 grid grid-cols-[1fr] gap-2 sm:grid-cols-[9fr_1fr]">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter dice expression (e.g., 2d8 + 4d6 * 2)"
-          className="input-field w-full rounded text-center shadow"
+          className="input-field !bg-neutral-00 w-full rounded text-center shadow"
         />
         <button
           onClick={handleRoll}
@@ -190,7 +199,7 @@ const DiceRoller: React.FC = () => {
       <div className="mb-4 flex flex-wrap justify-center space-x-2">
         {diceExpressions.map((dice, index) => (
           <div
-            className={`button mb-2 flex ${buttonStyles[index]} w-max rounded-lg px-4 py-2 text-white`}
+            className={`button mb-2 flex ${buttonStyles[index]} w-max rounded-lg px-4 py-2`}
             key={dice}
             onClick={() => handleCommonRoll(dice)}
           >

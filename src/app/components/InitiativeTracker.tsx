@@ -110,7 +110,7 @@ export default function InitiativeTracker() {
           </div>
           <section>
             <h3>Turn Order</h3>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2">
               <div>
                 <CharacterSummary
                   character={currentCharacter}
@@ -130,7 +130,7 @@ export default function InitiativeTracker() {
           </section>
         </div>
       </section>
-      <div className="text-white">
+      <div className="font-semibold text-white">
         <h4>Add Characters</h4>
       </div>
       {characters.map((character, index) => (
