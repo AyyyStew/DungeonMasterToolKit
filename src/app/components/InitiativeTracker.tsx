@@ -42,26 +42,16 @@ export default function InitiativeTracker() {
     }
   }, [characters, currentCharacterId]);
 
-  function nextTurnHandler() {
+  const handleTurnChange = (increment: number) => {
     if (characters.length > 0) {
-      const newPointer = (turnPointer + 1) % characters.length;
-      if (newPointer === 0) {
-        setRound(round + 1);
-      }
-      setTurnPointer(turnPointer + 1);
-    }
-  }
-
-  function previousTurnHandler() {
-    if (turnPointer > 0) {
       const newPointer =
-        (turnPointer - 1 + characters.length) % characters.length;
-      if (newPointer === characters.length - 1) {
-        setRound(round - 1);
+        (turnPointer + increment + characters.length) % characters.length;
+      setTurnPointer(newPointer);
+      if (newPointer === 0) {
+        setRound(round + (increment === 1 ? 1 : -1));
       }
-      setTurnPointer(turnPointer - 1);
     }
-  }
+  };
 
   const handleFieldChange = (
     field: keyof CharacterField,
@@ -70,11 +60,23 @@ export default function InitiativeTracker() {
     if (editId) {
       handleChangeCharacter(editId, field, value);
     } else {
-      if (field === "name") setName(value as string);
-      if (field === "notes") setNotes(value as string);
-      if (field === "initiative") setInitiative(value as number);
-      if (field === "hp") setHp(value as number);
-      if (field === "armor") setArmor(value as number);
+      switch (field) {
+        case "name":
+          setName(value as string);
+          break;
+        case "notes":
+          setNotes(value as string);
+          break;
+        case "initiative":
+          setInitiative(value as number);
+          break;
+        case "hp":
+          setHp(value as number);
+          break;
+        case "armor":
+          setArmor(value as number);
+          break;
+      }
     }
   };
 
@@ -83,6 +85,7 @@ export default function InitiativeTracker() {
       <h2 className="text-gradient mb-4 text-2xl font-semibold">
         Initiative Tracker
       </h2>
+
       <section className="mb-4 font-semibold text-white">
         <div>
           <div className="flex flex-wrap items-center justify-between">
@@ -90,7 +93,7 @@ export default function InitiativeTracker() {
             <div className="flex justify-end gap-4">
               <button
                 className="button red-button px-3 py-2"
-                onClick={previousTurnHandler}
+                onClick={() => handleTurnChange(-1)}
               >
                 Previous Turn
               </button>
@@ -102,7 +105,7 @@ export default function InitiativeTracker() {
               </button>
               <button
                 className="button blue-button px-3 py-2"
-                onClick={nextTurnHandler}
+                onClick={() => handleTurnChange(1)}
               >
                 Next Turn
               </button>
@@ -111,25 +114,25 @@ export default function InitiativeTracker() {
           <section>
             <h3>Turn Order</h3>
             <div className="flex flex-wrap gap-2">
-              <div>
-                <CharacterSummary
-                  character={currentCharacter}
-                  position="Current"
-                />
-              </div>
-              <div>
-                <CharacterSummary character={nextCharacter} position="Next" />
-              </div>
-              <div>
-                <CharacterSummary
-                  character={nextNextCharacter}
-                  position="On Deck"
-                />
-              </div>
+              {[currentCharacter, nextCharacter, nextNextCharacter].map(
+                (character, index) => (
+                  <CharacterSummary
+                    key={index}
+                    character={character}
+                    position={
+                      index === 0 ? "Current" : index === 1 ? "Next" : "On Deck"
+                    }
+                    onFieldChange={(field, value) =>
+                      handleChangeCharacter(character.id, field, value)
+                    }
+                  />
+                ),
+              )}
             </div>
           </section>
         </div>
       </section>
+
       <div className="font-semibold text-white">
         <h4>Add Characters</h4>
       </div>
@@ -138,13 +141,7 @@ export default function InitiativeTracker() {
           key={character.id}
           character={character}
           isCurrent={character.id === currentCharacter?.id}
-          fields={{
-            name: character.name,
-            notes: character.notes,
-            initiative: character.initiative,
-            hp: character.hp,
-            armor: character.armor,
-          }}
+          fields={character}
           order={index + 1}
           onFieldChange={(field, value) =>
             handleChangeCharacter(character.id, field, value)
