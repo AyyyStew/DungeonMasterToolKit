@@ -168,7 +168,7 @@ const DiceRoller: React.FC = () => {
   ];
 
   return (
-    <section className="card bg-gradient w-full max-w-5xl p-6">
+    <section className="card bg-gradient-dark w-full max-w-5xl p-6 shadow">
       <div className="mb-4 flex align-baseline">
         <Image
           className="mr-3"
@@ -185,7 +185,7 @@ const DiceRoller: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter dice expression (e.g., 2d8 + 4d6 * 2)"
-          className="input-field !bg-neutral-00 w-full rounded text-center shadow"
+          className="input-field w-full rounded text-center shadow"
         />
         <button
           onClick={handleRoll}

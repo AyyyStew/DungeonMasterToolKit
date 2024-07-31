@@ -13,17 +13,18 @@ const CharacterSummary: React.FC<{
     character = {
       hp: 0,
       armor: 0,
-      name: "No Character",
+      name: "Empty",
       id: "",
       initiative: 0,
       notes: "",
     };
+    onFieldChange = () => {};
   }
 
   return (
     <div>
-      <span className="text-xs font-semibold">{position}</span>
-      <div className="flex items-center rounded-lg bg-neutral-800 p-1 text-white">
+      <span className="text-sm font-semibold">{position}</span>
+      <div className="flex items-center rounded-lg bg-neutral-800 p-1 text-white shadow">
         <div className="mx-6 text-lg">{character.name}</div>
         <div className="flex gap-1">
           <StatField

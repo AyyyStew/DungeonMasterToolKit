@@ -23,7 +23,7 @@ const CharacterItem: React.FC<{
   onDelete,
   onSubmit,
 }) => (
-  <div className={`grid-item ${isCurrent ? "selected" : "bg-neutral-900"}`}>
+  <div className={`grid-item ${isCurrent ? "selected" : ""} shadow`}>
     <div className="flex items-center gap-1">
       <div className="card mx-1 max-w-[25%]">
         <span className="font-bold">#{order}</span>
@@ -57,25 +57,25 @@ const CharacterItem: React.FC<{
       />
     </div>
 
-    <div className="card flex flex-col items-center border-2 border-neutral-700 px-1">
-      <span className="mx-2 mt-1 self-start text-xs font-semibold">Name</span>
+    <div className="card flex flex-col items-center border border-neutral-700 px-1">
+      <span className="mx-1 my-1 self-start text-xs font-semibold">Name</span>
       <input
         type="text"
         placeholder="Character Name"
         value={fields.name}
         onChange={(e) => onFieldChange("name", e.target.value)}
-        className="input-field input-field bg-gradient-dark mx-2 w-full !text-left"
+        className="input-field input-field mx-2 w-full bg-neutral-900 !text-left"
       />
     </div>
 
-    <div className="card flex flex-col items-center border-2 border-neutral-700 px-1">
-      <span className="mx-2 mt-1 self-start text-xs font-semibold">Notes</span>
+    <div className="card flex flex-col items-center border border-neutral-700 px-1">
+      <span className="mx-1 my-1 self-start text-xs font-semibold">Notes</span>
       <textarea
         placeholder="Notes"
         value={fields.notes}
         rows={1}
         onChange={(e) => onFieldChange("notes", e.target.value)}
-        className="input-field input-field bg-gradient-dark mx-2 w-full !text-left"
+        className="input-field input-field mx-2 w-full bg-neutral-900 !text-left"
       />
     </div>
     {character ? (

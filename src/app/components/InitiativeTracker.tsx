@@ -81,7 +81,7 @@ export default function InitiativeTracker() {
   };
 
   return (
-    <div className="card bg-gradient w-full max-w-5xl p-6">
+    <div className="card bg-gradient-dark w-full max-w-5xl p-6 shadow">
       <h2 className="text-gradient mb-4 text-2xl font-semibold">
         Initiative Tracker
       </h2>
@@ -113,7 +113,7 @@ export default function InitiativeTracker() {
           </div>
           <section>
             <h3>Turn Order</h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex gap-2 overflow-x-auto">
               {[currentCharacter, nextCharacter, nextNextCharacter].map(
                 (character, index) => (
                   <CharacterSummary

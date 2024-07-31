@@ -16,11 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={
-          inter.className + " bg-gradient-to-br from-neutral-900 to-neutral-950"
-        }
-      >
+      <body className={inter.className + " bg-neutral-950"}>
         <Banner></Banner>
         <div className="mx-3">{children}</div>
       </body>
