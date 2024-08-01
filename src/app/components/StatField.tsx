@@ -17,7 +17,7 @@ export const StatField: React.FC<{
       onChange={(e) =>
         onChange(type === "number" ? Number(e.target.value) : e.target.value)
       }
-      className="input-field max-w-12 bg-neutral-900 text-center font-normal"
+      className="input-field w-full min-w-12 bg-neutral-900 text-center font-normal"
       maxLength={maxLength}
     />
   </div>

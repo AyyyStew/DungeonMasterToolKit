@@ -24,8 +24,8 @@ const CharacterSummary: React.FC<{
   return (
     <div>
       <span className="text-sm font-semibold">{position}</span>
-      <div className="flex items-center rounded-lg bg-neutral-800 p-1 text-white shadow">
-        <div className="mx-6 text-lg">{character.name}</div>
+      <div className="flex items-center rounded-lg bg-neutral-800 px-2 py-1 text-white shadow">
+        <div className="ml-3 mr-3 text-lg">{character.name}</div>
         <div className="flex gap-1">
           <StatField
             label="HP"
