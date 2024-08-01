@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Character, CharacterField } from "../hooks/useCharacterManager";
+import { StatField } from "./StatField";
 
 const CharacterItem: React.FC<{
   character?: Character;
@@ -22,82 +23,67 @@ const CharacterItem: React.FC<{
   onDelete,
   onSubmit,
 }) => (
-  <div className={`grid-item ${isCurrent ? "selected" : "bg-neutral-900"}`}>
-    <div className="flex">
-      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-neutral-700 p-2">
-        <span className="justify-start pb-1 text-xs font-semibold">#</span>
-        <input
-          type="text"
-          placeholder="Order"
-          value={order}
-          readOnly={true}
-          className="input-field text-center"
-        />
+  <div className={`grid-item ${isCurrent ? "selected" : ""} shadow`}>
+    <div className="flex items-center gap-1">
+      <div className="card mx-1 max-w-[25%]">
+        <span className="font-bold">#{order}</span>
       </div>
 
-      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-neutral-700 p-2">
-        <span className="justify-start pb-1 text-xs font-semibold">Init</span>
-        <input
-          type="number"
-          placeholder="Initiative"
-          value={fields.initiative}
-          onChange={(e) => onFieldChange("initiative", Number(e.target.value))}
-          className="input-field text-center"
-          maxLength={2}
-        />
-      </div>
+      <StatField
+        label="Init"
+        type="number"
+        placeholder="Initiative"
+        value={fields.initiative}
+        onChange={(value) => onFieldChange("initiative", value)}
+        maxLength={2}
+      />
 
-      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-neutral-700 p-2">
-        <span className="justify-start pb-1 text-xs font-semibold">HP</span>
-        <input
-          type="number"
-          placeholder="HP"
-          value={fields.hp}
-          onChange={(e) => onFieldChange("hp", Number(e.target.value))}
-          className="input-field text-center"
-          maxLength={3}
-        />
-      </div>
+      <StatField
+        label="HP"
+        type="number"
+        placeholder="HP"
+        value={fields.hp}
+        onChange={(value) => onFieldChange("hp", value)}
+        maxLength={3}
+      />
 
-      <div className="card mx-1 flex max-w-[25%] flex-col items-center bg-neutral-700 p-2">
-        <span className="justify-start pb-1 text-xs font-semibold">Armor</span>
-        <input
-          type="number"
-          placeholder="Armor"
-          value={fields.armor}
-          onChange={(e) => onFieldChange("armor", Number(e.target.value))}
-          className="input-field w-full text-center"
-          maxLength={2}
-        />
-      </div>
+      <StatField
+        label="Armor"
+        type="number"
+        placeholder="Armor"
+        value={fields.armor}
+        onChange={(value) => onFieldChange("armor", value)}
+        maxLength={2}
+      />
     </div>
-    <div className="card mx-1 flex flex-col items-center bg-neutral-700 p-2">
-      <span className="justify-start pb-1 text-xs font-semibold">Name</span>
+
+    <div className="card flex flex-col items-center border border-neutral-700 px-1">
+      <span className="mx-1 my-1 self-start text-xs font-semibold">Name</span>
       <input
         type="text"
         placeholder="Character Name"
         value={fields.name}
         onChange={(e) => onFieldChange("name", e.target.value)}
-        className="input-field !text-left"
+        className="input-field input-field mx-2 w-full bg-neutral-900 !text-left"
       />
     </div>
 
-    <div className="card mx-1 flex flex-col items-center bg-neutral-700 p-2">
-      <span className="justify-start pb-1 text-xs font-semibold">Notes</span>
+    <div className="card flex flex-col items-center border border-neutral-700 px-1">
+      <span className="mx-1 my-1 self-start text-xs font-semibold">Notes</span>
       <textarea
         placeholder="Notes"
         value={fields.notes}
         rows={1}
         onChange={(e) => onFieldChange("notes", e.target.value)}
-        className="input-field !text-left"
+        className="input-field input-field mx-2 w-full bg-neutral-900 !text-left"
       />
     </div>
     {character ? (
-      <button className="button blue-button" onClick={onDelete}>
+      <button className="button blue-button ml-1" onClick={onDelete}>
         Delete
       </button>
     ) : (
-      <button className="button red-button" onClick={onSubmit}>
+      <button className="button red-button ml-1" onClick={onSubmit}>
         Add Character
       </button>
     )}

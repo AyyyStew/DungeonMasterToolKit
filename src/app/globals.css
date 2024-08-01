@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  input {
+  input,
+  textarea {
     @apply bg-neutral-800;
   }
 
@@ -19,29 +20,32 @@
   @apply bg-gradient-radial from-neutral-900 to-neutral-800 shadow;
 }
 
-.card-gradient{
-  @apply bg-neutral-800;
+.bg-gradient-dark {
+  @apply bg-gradient-radial from-neutral-950 to-neutral-900 to-30% shadow;
+}
 
+.card-gradient {
+  @apply bg-neutral-800;
 }
 
 .text-gradient {
-  @apply bg-gradient-to-r from-emerald-100 from-10% to-emerald-600 bg-clip-text text-transparent
-  /* @apply bg-gradient-to-br from-emerald-600 to-95% to-cyan-500 bg-clip-text text-transparent; */
+  @apply bg-gradient-to-r from-zinc-50 to-zinc-100 bg-clip-text text-transparent;
+  /* @apply bg-gradient-to-r from-emerald-100 from-10% to-emerald-600 bg-clip-text text-transparent */
+  /* @apply bg-gradient-to-br from-emerald-600 to-cyan-500 to-95% bg-clip-text text-transparent; */
 }
-
 .input-field {
-  @apply mx-2 w-full rounded-md bg-neutral-800 p-2 mb-1 text-white focus:outline-none focus:ring-2 focus:ring-neutral-500;
+  @apply mb-1 rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-neutral-500;
 }
 
 .button {
-  @apply rounded-lg text-white drop-shadow-lg font-semibold focus:outline-none focus:ring-2 shadow-md;
+  @apply rounded-lg font-semibold text-white shadow-md drop-shadow-lg focus:outline-none focus:ring-2;
 }
 
 .button:hover {
   @apply shadow-inner shadow-neutral-700;
 }
 
-.shadow{
+.shadow {
   @apply shadow-md shadow-neutral-900;
 }
 
@@ -50,15 +54,15 @@
 }
 
 .blue-button {
-  @apply bg-gradient-to-r from-emerald-600 to-95% to-cyan-500;
+  @apply bg-gradient-to-r from-emerald-600 to-cyan-500 to-95%;
 }
 
 .grey-button {
-  @apply bg-gradient-to-r from-neutral-600 to-95% to-neutral-500;
+  @apply bg-gradient-to-r from-neutral-600 to-neutral-500 to-95%;
 }
 
 .grid-item {
-  @apply mb-2 grid grid-cols-1 gap-1 rounded-lg border border-neutral-700 bg-neutral-800 p-2 text-white md:grid-cols-[3fr_4fr_5fr_100px];
+  @apply mb-2 grid grid-cols-1 gap-1 rounded-lg bg-neutral-800 p-2 text-white md:grid-cols-[3fr_4fr_5fr_100px];
 }
 
 .selected {
@@ -81,7 +85,7 @@
     display: none;
   }
 
-  .grid-item .input-field {
+  .grid-item .input-field mx-2 {
     @apply p-1;
   }
 

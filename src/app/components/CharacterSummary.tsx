@@ -1,35 +1,48 @@
 "use client";
 
 import React from "react";
-import { Character } from "../hooks/useCharacterManager";
+import { Character, CharacterField } from "../hooks/useCharacterManager";
+import { StatField } from "./StatField";
 
 const CharacterSummary: React.FC<{
   character: Character | undefined;
   position: string;
-}> = ({ character, position }) => {
+  onFieldChange: (field: keyof CharacterField, value: string | number) => void;
+}> = ({ character, position, onFieldChange }) => {
   if (!character) {
     character = {
       hp: 0,
       armor: 0,
-      name: "Name",
+      name: "Empty",
       id: "",
       initiative: 0,
       notes: "",
     };
+    onFieldChange = () => {};
   }
 
   return (
-    <div className="">
-      <span className="text-xs font-semibold">{position}</span>
-      <div className="flex items-center rounded-lg border-neutral-700 bg-neutral-800 text-white shadow-md">
-        <div className="mx-7 text-lg">{character.name}</div>
-        <div className="card flex flex-col-reverse items-center bg-neutral-700 p-2">
-          <span className="text-xs font-semibold">HP</span>
-          <span>{character.hp}</span>
-        </div>
-        <div className="card m-2 flex flex-col-reverse items-center bg-neutral-700 p-2">
-          <span className="text-xs font-semibold">Armor</span>
-          <span>{character.armor}</span>
+    <div>
+      <span className="text-sm font-semibold">{position}</span>
+      <div className="flex items-center rounded-lg bg-neutral-800 px-2 py-1 text-white shadow">
+        <div className="ml-3 mr-3 text-lg">{character.name}</div>
+        <div className="flex gap-1">
+          <StatField
+            label="HP"
+            type="number"
+            placeholder="HP"
+            value={character.hp}
+            onChange={(value) => onFieldChange("hp", value)}
+            maxLength={2}
+          />
+          <StatField
+            label="Armor"
+            type="number"
+            placeholder="Armor"
+            value={character.armor}
+            onChange={(value) => onFieldChange("armor", value)}
+            maxLength={2}
+          />
         </div>
       </div>
     </div>

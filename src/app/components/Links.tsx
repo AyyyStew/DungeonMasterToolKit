@@ -9,7 +9,7 @@ function makeLink(path: string, name: string, pathname: string) {
   return (
     <li className="mx-2">
       <Link
-        className={`link ${pathname === path ? "text-white" : "text-neutral-600"}`}
+        className={`link ${pathname === path ? "text-gradient" : "text-neutral-600"}`}
         href={path}
       >
         {name}

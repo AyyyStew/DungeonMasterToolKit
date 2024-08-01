@@ -1,13 +1,11 @@
-import DiceRoller from "./DiceRoller";
+import DiceRoller from "./DiceRoller/DiceRoller";
 import InitiativeTracker from "./InitiativeTracker";
 
 export default function Toolkit() {
   return (
-    <div className="flex justify-center">
-      <div className="my-6 flex flex-col items-stretch gap-6">
-        <DiceRoller></DiceRoller>
-        <InitiativeTracker></InitiativeTracker>
-      </div>
+    <div className="my-3 flex flex-col items-center gap-3">
+      <DiceRoller></DiceRoller>
+      <InitiativeTracker></InitiativeTracker>
     </div>
   );
 }
